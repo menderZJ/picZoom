@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="./JSLib/vue.js"></script>
+		<script src="./JSLib/picZoom.min.js"></script>
+		<link rel="stylesheet" href="./css/picZoom.css">
+		
+	</head>
+	<body>
+		<div id="app">
+			<pic-zoom width="400" height="400" img_src="./images/demo.jpg" v-on:middle_drag_start="start" v-on:middle_draging="ing" v-on:middle_drag_end="end" v-on:middle_wheel="wheel" v-on:middle_dbclick="mdblclick">
+		</pic-zoom>			
+		</div>
+		<div>
+			<p>【点击前往】[<a href=http://www.crazyjs.org/demo/picZoom/test.html>http://www.crazyjs.org/demo/picZoom/test.html/</a>]</p>
+			<p>【GitHub】[<a href=https://github.com/menderZJ/picZoom>https://github.com/menderZJ/picZoom</a>]</p>
+
+		</div>
+	<script>
+		var vm=new Vue({
+			el:"#app",
+			methods:{
+				start:function(e){
+					e=e||event;
+					console.log("start");
+				},
+				ing:function(e){
+					e=e||event;
+					console.log("ing");
+				},
+				end:function(e){
+					e=e||event;
+					console.log("end");
+				},
+				wheel:function(e){
+					e=e||event;
+					console.log("wheel");
+				},
+				mdblclick:function(e){
+					e=e||event;
+					console.log("wheel");
+				}
+			},
+		});
+	</script>
+	</body>
+
+	</html>

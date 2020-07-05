@@ -1,0 +1,23 @@
+.pic_Zoom{
+			overflow: hidden;
+			display: block;
+			position: relative;
+			border: #2C3E50 1px solid;
+		}
+		.pic_Zoom>img{
+			position: relative;
+			float:left;
+			left:20px;
+			top:20px;
+			cursor: pointer;
+		}
+		.pic_Zoom>span{
+			display: block;
+			z-index:-1;
+			position: absolute;
+			left:20%;
+			top:40%;
+			font-size: 18px;
+			margin:20px;
+			opacity: 0.2;
+		}
