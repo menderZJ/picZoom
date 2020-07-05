@@ -6,7 +6,7 @@
 ```
 <script src="./JSLib/picZoom.min.js"></script>
 ```
-1. 载入组件演示文件：picZoom.css
+1. 载入组件样式文件：picZoom.css
 ```
 <link rel="stylesheet" href="./css./picZoom.css">
 ```
