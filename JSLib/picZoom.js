@@ -1,10 +1,3 @@
-/**
- * pic-zoom V1.0
- * @since 2020-07-05
- * @Author mender.zj.yang
- * @LICENES Undoer the MIT licenes
- * @Detail https://github.com/menderZJ/picZoom
- */
 !(function(w) {	
 	if(typeof w ==="object"){
 		var global=w;
@@ -17,22 +10,22 @@
 				//容器宽
 				width: {
 					type: [Number, String],
-					default: "400px",
+					default: "",
 				},
 				//容器高
 				height: {
 					type: [Number, String],
-					default: "400px",
+					default: "",
 				},
 				//图片宽
 				img_width: {
 					type: [Number, String],
-					default: 400,
+					default:"" ,
 				},
 				//图片高
 				img_height: {
 					type: [Number, String],
-					default: 400,
+					default:"" ,
 				},
 				//img图片地址
 				img_src: {
@@ -130,8 +123,8 @@
 							this.dbClick = 0;
 							this.$refs.img.style.left = "0px";
 							this.$refs.img.style.top = "0px";
-							this.t_img_width = this.$attrs['img_width'] || 400;
-							this.t_img_height = this.$attrs['img_height'] || 400;
+							this.t_img_width = this.imgWidth;
+							this.t_img_height = this.imgHeight;
 						} else if (this.dbClick > 2 || (new Date()).getTime() - this.dbclickStartTime > 500) {
 							this.dbClick = 0;
 						}
@@ -143,7 +136,7 @@
 				},
 				ev_mousewheel: function(e) {
 					e = e || window.event;
-					var wheelValue = e.wheelDelta || e.detail; //浏览器IE，谷歌滑轮事件  或者Firefox滑轮事件  
+					var wheelValue = e.wheelDelta || e.detail ||-e.deltaY ; //浏览器IE，谷歌滑轮事件  或者Firefox滑轮事件  
 					if (wheelValue > 0) {
 						this.zoom_rate = 1.1;
 						if (this.zoom_rate > this.max_rate) {
@@ -155,6 +148,7 @@
 							this.zoom_rate = this.min_rate;
 						}
 					}
+					
 					var imgWidth = this.t_img_width * this.zoom_rate;
 					var imgHeight = this.t_img_height * this.zoom_rate;
 					imgWidth = imgWidth < 20 ? 20 : imgWidth;
@@ -181,7 +175,17 @@
 			computed: {
 
 			},
-			template: "<div class=\"pic_Zoom\" :style=\"{display:'block','width':parseFloat(width)+'px','height':parseFloat(height)+'px'}\" 	v-on:mousewheel.prevent.stop.capture=\"ev_mousewheel($event)\" v-on:mouseup.middle.stop.prevent.capture=\"ev_midlle_drag_end($event)\" 	v-on:mouseout.stop=\"ev_midlle_drag_end($event)\"><img :src=\"img_src\" v-on:mousedown.middle.prevent.stop.capture=\"ev_midlle_drag_start($event)\" v-on:mousemove.prevent.stop.capture=\"ev_midlle_drag_ing($event)\" :width=\"t_img_width\" :height=\"t_img_height\"  :style=\"{left:img_left,top:img_top}\" ref=\"img\" /><span>滚动滚轮可进行缩放,按住鼠标滚轮键可移动图片.在图片上双击鼠标中键可还原图片</span></div>",
+			beforeMount: function () {
+				var tnode = document.createElement("img");
+				tnode.src = this.img_src;
+				var vv = this;
+				tnode.onload = function () {
+					vv.t_img_width=vv.imgWidth = tnode.width;
+					vv.t_img_height =vv.imgHeight = tnode.height;
+				}
+				
+			},
+			template: "<div class=\"pic_Zoom\" :style=\"{display:'block','width':parseFloat(width)+'px','height':parseFloat(height)+'px'}\" 	v-on:mousewheel.prevent.stop.capture=\"ev_mousewheel($event)\" v-on:wheel.prevent.stop.capture=\"ev_mousewheel($event)\"  v-on:mouseup.middle.stop.prevent.capture=\"ev_midlle_drag_end($event)\" 	v-on:mouseout.stop=\"ev_midlle_drag_end($event)\"><img :src=\"img_src\" v-on:mousedown.middle.prevent.stop.capture=\"ev_midlle_drag_start($event)\" v-on:mousemove.prevent.stop.capture=\"ev_midlle_drag_ing($event)\" :width=\"t_img_width\" :height=\"t_img_height\"  :style=\"{left:img_left,top:img_top}\" ref=\"img\" /><span>滚动滚轮可进行缩放,按住鼠标滚轮键可移动图片.在图片上双击鼠标中键可还原图片</span></div>",
 		};
 
 		if ("object" === typeof Vue || "function" === typeof Vue) {
